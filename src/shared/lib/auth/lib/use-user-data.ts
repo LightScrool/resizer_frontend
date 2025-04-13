@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { getUserDataFromLs, saveUserDataToLs, deleteUserDataFromLs } from './user-data-storage';
-import { UserData } from "../types";
+import { UserData } from "../../../api/types";
 
 export const useUserData = () => {
     const [userData, setUserData] = useState<UserData | null>(() => getUserDataFromLs());

@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { UserData } from "../types";
+import { UserData } from "../../../api/types";
 
 export type AuthContextValue = {
     isAuth: false;

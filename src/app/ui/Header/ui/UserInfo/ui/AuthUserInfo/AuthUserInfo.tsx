@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import styles from "./AuthUserInfo.module.scss";
-import { UserData } from "../../../../../../../shared/lib/auth/types";
+
+import { UserData } from "../../../../../../../shared/api/types";
 import { logout } from "../../../../../../../shared/lib/auth";
 
 import logoutImg from "./assets/logout.svg";

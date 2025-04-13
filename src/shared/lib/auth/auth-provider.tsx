@@ -2,9 +2,10 @@ import React, { PropsWithChildren, useLayoutEffect, useMemo, useState } from 're
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useToken } from './lib/use-token';
-import { UserData } from './types';
 import { useUserData } from './lib/use-user-data';
 import { authContext, AuthContextValue } from './lib/context';
+import { UserData } from '../../api/types';
+import { ResizerBackendClient } from '../../api';
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const { hash } = useLocation();
@@ -33,12 +34,9 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
         setIsLoading(true);
 
-        new Promise(r => {
-            setTimeout(() => r({ 
-                name: 'lightscrool',
-                avatarUrl: 'https://avatars.githubusercontent.com/u/98645665?v=4'
-            } satisfies UserData), 1000);
-        })
+        const resizerBackendClient = new ResizerBackendClient({ authToken: token });
+
+        resizerBackendClient.getUserData()
             .then((userData) => {
                 setUserData(userData as UserData)
             })

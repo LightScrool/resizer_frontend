@@ -1,4 +1,4 @@
-import { UserData } from "../types";
+import { UserData } from "../../../api/types";
 
 const LOCAL_STORAGE_USER_DATA_KEY = 'userData';
 
