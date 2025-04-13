@@ -1,0 +1,23 @@
+@import "../../../shared/styles/variables.scss";
+
+.Header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  height: $header-size;
+  width: 100%;
+
+  background-color: #fff;
+  border-bottom: 3px solid $color-main;
+  box-shadow: $shadow-block;
+}
+
+.inner {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
