@@ -1,0 +1,23 @@
+.root {
+    font-size: 1.2em;
+}
+
+.loaderWrapper {
+    display: inline-block;
+
+    position: relative;
+
+    & > * {
+        position: absolute;
+        transform: translateY(-75%);
+    }
+}
+
+.textButton {
+    display: inline;
+    background: none;
+    border: none;
+    font: inherit;
+
+    text-decoration: underline;
+}

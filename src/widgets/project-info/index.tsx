@@ -8,6 +8,7 @@ import { fetchProjectInfo, selectFetchProjectInfoStatus, selectProjectInfo } fro
 import { RequestStatuses } from "../../shared/lib/network";
 import { LoaderPage } from "../../pages/loader-page";
 import { ErrorPage } from "../../pages/error-page";
+import { ApiKey } from "./components/api-key";
 
 const PLACEHOLDERS_MAX_HEIGHT = 182;
 
@@ -62,7 +63,7 @@ export const ProjectInfo: React.FC<Props> = ({ projectAlias }) => {
                 </Button>
             </div>
             <div className={styles.apiKeyBlock}>
-                <span className={styles.apiKey}>Ключ для доступа по API: {'*'.repeat(32)}</span>
+                <ApiKey projectAlias={projectInfo.alias} />
                 <Button className={styles.button}>
                     Сбросить ключ
                 </Button>

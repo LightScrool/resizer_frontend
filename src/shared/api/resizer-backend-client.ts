@@ -36,4 +36,9 @@ export class ResizerBackendClient {
     const response = await this.api.get(`/v1/projects/${projectAlias}`);
     return response.data;
   }
+
+  getProjectApiKey = async (projectAlias: string): Promise<string> => {
+    const response = await this.api.get(`/v1/projects/${projectAlias}/apiKey`);
+    return response.data;
+  }
 }
