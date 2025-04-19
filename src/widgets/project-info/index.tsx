@@ -65,7 +65,7 @@ export const ProjectInfo: React.FC<Props> = ({ projectAlias }) => {
             </div>
             <div className={styles.apiKeyBlock}>
                 <ApiKey projectAlias={projectInfo.alias} />
-                <RefreshApiKeyButton className={styles.button} />
+                <RefreshApiKeyButton className={styles.button} projectAlias={projectInfo.alias} />
             </div>
         </section>
     )

@@ -1,15 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { RequestStatuses } from '../../../shared/lib/network';
-import { fetchApiKey } from './thunk';
+import { fetchApiKey, fetchRefreshApiKey } from './thunk';
 
 type State = {
     fetchApiKeyStatus: RequestStatuses;
+    fetchRefreshApiKeyStatus: RequestStatuses;
     apiKey: string | null;
 };
 
 const initialState: State = {
     fetchApiKeyStatus: RequestStatuses.IDLE,
+    fetchRefreshApiKeyStatus: RequestStatuses.IDLE,
     apiKey: null,
 };
 
@@ -34,15 +36,30 @@ export const projectApiKeySlice = createSlice({
             .addCase(fetchApiKey.rejected, (state) => {
                 state.fetchApiKeyStatus = RequestStatuses.FAILED;
             });
+
+        builder
+            .addCase(fetchRefreshApiKey.pending, (state) => {
+                state.fetchRefreshApiKeyStatus = RequestStatuses.PENDING;
+            })
+            .addCase(fetchRefreshApiKey.fulfilled, (state) => {
+                state.fetchRefreshApiKeyStatus = RequestStatuses.SUCCESS;
+
+                state.apiKey = null;
+            })
+            .addCase(fetchRefreshApiKey.rejected, (state) => {
+                state.fetchRefreshApiKeyStatus = RequestStatuses.FAILED;
+            });
     },
     selectors: {
         selectIsApiKeyLoading: (state) => state.fetchApiKeyStatus === RequestStatuses.PENDING,
+        selectIsApiKeyRefreshing: (state) => state.fetchRefreshApiKeyStatus === RequestStatuses.PENDING,
         selectApiKey: (state) => state.apiKey,
     },
 });
 
 export const {
     selectIsApiKeyLoading,
+    selectIsApiKeyRefreshing,
     selectApiKey,
 } = projectApiKeySlice.selectors;
 

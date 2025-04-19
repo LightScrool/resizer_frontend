@@ -16,3 +16,14 @@ export const fetchApiKey = createAsyncThunk(
         }
     }
 );
+
+export const fetchRefreshApiKey = createAsyncThunk(
+    'projectApiKey/fetchRefreshApiKey',
+    async ({ resizerBackend, projectAlias }: FetchProjectInfoParams, { rejectWithValue }) => {
+        try {
+            return await resizerBackend.refreshProjectApiKey(projectAlias);
+        } catch (e) {
+            return rejectWithValue(e);
+        }
+    }
+);

@@ -41,4 +41,8 @@ export class ResizerBackendClient {
     const response = await this.api.get(`/v1/projects/${projectAlias}/apiKey`);
     return response.data;
   }
+
+  refreshProjectApiKey = async (projectAlias: string): Promise<void> => {
+    await this.api.delete(`/v1/projects/${projectAlias}/apiKey`);
+  }
 }
