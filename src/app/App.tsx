@@ -12,31 +12,34 @@ import { ProjectListPage } from '../pages/project-list-page';
 import { ProjectPage } from '../pages/project-page';
 import { Provider } from 'react-redux';
 import { store } from '../entities/redux/store';
+import { ActWithConfirmationProvider } from '../shared/lib/act-with-confirmation';
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Provider store={store}>
-          <Layout>
-            <AuthGuard
-              loader={<LoaderPage/>}
-              noAuth={<NoAuthPage/>} 
-            >
-              <Routes>
-                <Route path='/' element={<ProjectListPage />} />
-                <Route path='/projects' element={<ProjectListPage />} />
-                
-                <Route path='/projects/:projectAlias' element={<ProjectPage />}>
-                  <Route index element={'Пресеты'}/>
-                  <Route path='presets' element={'Пресеты'}/>
-                  <Route path='images' element={'Изображения'}/>
-                </Route>
-                
-                <Route path='*' element={<NotFoundPage />} />
-              </Routes>
-            </AuthGuard>
-          </Layout>
+          <ActWithConfirmationProvider>
+            <Layout>
+              <AuthGuard
+                loader={<LoaderPage/>}
+                noAuth={<NoAuthPage/>} 
+              >
+                <Routes>
+                  <Route path='/' element={<ProjectListPage />} />
+                  <Route path='/projects' element={<ProjectListPage />} />
+                  
+                  <Route path='/projects/:projectAlias' element={<ProjectPage />}>
+                    <Route index element={'Пресеты'}/>
+                    <Route path='presets' element={'Пресеты'}/>
+                    <Route path='images' element={'Изображения'}/>
+                  </Route>
+                  
+                  <Route path='*' element={<NotFoundPage />} />
+                </Routes>
+              </AuthGuard>
+            </Layout>
+          </ActWithConfirmationProvider>
         </Provider>
       </AuthProvider>
     </BrowserRouter>

@@ -9,7 +9,7 @@ interface ButtonProps
     HTMLButtonElement
   > {
   subtext?: string;
-  danger?: boolean;
+  preset?: 'primary' | 'secondary' | 'danger';
   isLoading?: boolean;
 }
 
@@ -19,14 +19,15 @@ const Button: FC<ButtonProps> = ({
   disabled,
   className,
   type,
-  danger = false,
+  preset = 'primary',
   isLoading = false,
   ...props
 }) => {
   const combineClasses = classnames(styles.Button, className, {
     [styles.disabled]: disabled,
     [styles.withSubtext]: subtext,
-    [styles.danger]: danger,
+    [styles.secondary]: preset === 'secondary',
+    [styles.danger]: preset === 'danger',
   });
 
   const content = subtext ? (

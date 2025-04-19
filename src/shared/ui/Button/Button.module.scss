@@ -24,6 +24,14 @@
   padding: 0.5rem 2.5rem;
 }
 
+.secondary {
+  background-color: $color-secondary;
+  &:hover {
+    background-color: transparent;
+    border-color: $color-secondary;
+  }
+}
+
 .danger {
   background-color: $color-red;
   &:hover {

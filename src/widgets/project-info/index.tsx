@@ -9,6 +9,7 @@ import { RequestStatuses } from "../../shared/lib/network";
 import { LoaderPage } from "../../pages/loader-page";
 import { ErrorPage } from "../../pages/error-page";
 import { ApiKey } from "./components/api-key";
+import { RefreshApiKeyButton } from "./components/refresh-api-key-button";
 
 const PLACEHOLDERS_MAX_HEIGHT = 182;
 
@@ -58,15 +59,13 @@ export const ProjectInfo: React.FC<Props> = ({ projectAlias }) => {
                         </div>
                     ): null}
                 </div>
-                <Button className={styles.button} danger>
+                <Button className={styles.button} preset="danger">
                     Удалить проект
                 </Button>
             </div>
             <div className={styles.apiKeyBlock}>
                 <ApiKey projectAlias={projectInfo.alias} />
-                <Button className={styles.button}>
-                    Сбросить ключ
-                </Button>
+                <RefreshApiKeyButton className={styles.button} />
             </div>
         </section>
     )
