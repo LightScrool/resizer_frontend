@@ -1,29 +1,13 @@
-import React, { createContext, PropsWithChildren, useContext, useState } from "react";
+import React, { PropsWithChildren, useContext, useState } from "react";
 import { Popup } from "../../ui/Popup";
 import Button from "../../ui/Button/Button";
+import { actWithConfirmationContext, Confirmation } from "./context";
 
 import styles from './styles.module.scss';
 
-type Action = () => (void | Promise<void>);
-
-type Confirmation = {
-    text: string;
-    action: Action;
-    isDanger?: boolean;
-};
-
-type ContextValue = {
-    confirmation: Confirmation | null;
-    setConfirmation: (value: Confirmation | null) => void;
-}
-
-const Context = createContext<ContextValue>({
-    confirmation: null,
-    setConfirmation: () => {},
-});
 
 const ConfirmationPopup: React.FC<PropsWithChildren> = () => {
-    const {confirmation, setConfirmation} = useContext(Context);
+    const {confirmation, setConfirmation} = useContext(actWithConfirmationContext);
     
     const handleClose = () => setConfirmation(null);
     
@@ -58,25 +42,13 @@ const ConfirmationPopup: React.FC<PropsWithChildren> = () => {
     )
 }
 
-export const useActWithConfirmation = () => {
-    const {setConfirmation} = useContext(Context);
-
-    return (text: string, action: Action, isDanger?: boolean) => {
-        setConfirmation({
-            text,
-            action,
-            isDanger,
-        })
-    }
-};
-
 export const ActWithConfirmationProvider: React.FC<PropsWithChildren> = ({children}) => {
     const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
 
     return (
-        <Context.Provider value={{confirmation, setConfirmation}}>
+        <actWithConfirmationContext.Provider value={{confirmation, setConfirmation}}>
             <ConfirmationPopup/>
             {children}
-        </Context.Provider>
+        </actWithConfirmationContext.Provider>
     )
 }
