@@ -22,7 +22,7 @@ const initialState: State = {
 };
 
 export const projectsListSlice = createSlice({
-    name: 'slots',
+    name: 'projectsList',
     initialState,
     reducers: {},
     extraReducers: (builder) => {

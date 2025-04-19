@@ -1,7 +1,7 @@
 
 import axios, {AxiosInstance} from "axios";
 import {RESIZER_BACKEND_URL} from "../config";
-import { CreateProject, ProjectListItem, UserData, UserProjects } from "./types";
+import { CreateProject, ProjectInfo, ProjectListItem, UserData, UserProjects } from "./types";
 
 export class ResizerBackendClient {
   declare private api: AxiosInstance;
@@ -27,8 +27,13 @@ export class ResizerBackendClient {
     return response.data;
   }
 
-  createProject  = async (project: CreateProject): Promise<ProjectListItem> => {
+  createProject = async (project: CreateProject): Promise<ProjectListItem> => {
     const response = await this.api.post("/v1/projects", project);
+    return response.data;
+  }
+
+  getProjectInfo = async (projectAlias: string): Promise<ProjectInfo> => {
+    const response = await this.api.get(`/v1/projects/${projectAlias}`);
     return response.data;
   }
 }

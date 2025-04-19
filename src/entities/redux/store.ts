@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { projectsListSlice } from './projects-list';
+import { projectInfoSlice } from './project-info';
 
 export const rootReducer = combineReducers({
     [projectsListSlice.name]: projectsListSlice.reducer,
+    [projectInfoSlice.name]: projectInfoSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

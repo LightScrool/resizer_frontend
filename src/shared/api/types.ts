@@ -19,3 +19,11 @@ export type CreateProject = {
     name?: string;
     description?: string;
 }
+
+export type ProjectInfo = {
+    alias: string;
+    presetsLimit: number;
+    imagesLimit: number;
+    name: string | null;
+    description: string | null;
+};
