@@ -4,35 +4,39 @@ import Button from "../../shared/ui/Button/Button";
 import { useResizerBackend } from "../../shared/api/hook";
 
 import styles from './popup-content.module.scss';
+import { useAppDispatch, useAppSelector } from "../../entities/redux/app-typing";
+import { fetchCreateProject, selectIsCreateProjectLoading } from "../../entities/redux/projects-list";
 
 type Props = {
     onClose: VoidFunction;
 }
 
 export const PopupContent: React.FC<Props> = ({ onClose }) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const { createProject } = useResizerBackend();
-
     const [alias, setAlias] = useState<string>();
     const [name, setName] = useState<string>();
     const [description, setDescription] = useState<string>();
 
     const isDisabled = !alias;
 
+    const isLoading = useAppSelector(selectIsCreateProjectLoading);
+    const resizerBackend = useResizerBackend();
+    const dispatch = useAppDispatch();
+
     const handleClick = () => {
         if (isDisabled) {
             return;
         }
 
-        setIsLoading(true);
-
-        createProject({
-            alias,
-            name,
-            description,
-        })
+        dispatch(fetchCreateProject({
+            resizerBackend,
+            project: {
+                alias,
+                name,
+                description,
+            }
+        }))
+            .unwrap()
             .then(onClose)
-            .finally(() => setIsLoading(false));
     }
     
     return (

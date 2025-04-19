@@ -1,23 +1,35 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Link } from "react-router-dom";
 
-import { useUserProjects } from "./lib/use-user-projects";
 import { LoaderPage } from "../loader-page";
 import { ErrorPage } from "../error-page";
-import { CreateProjectButton } from "../../entities/create-project-button";
+import { CreateProjectButton } from "../../widgets/create-project-button";
 
 import styles from './styles.module.scss';
+import { useAppDispatch, useAppSelector } from "../../entities/redux/app-typing";
+import { fetchProjectsList, selectFetchProjectsListStatus, selectProjectsLimit, projectsSelectors } from "../../entities/redux/projects-list";
+import { useResizerBackend } from "../../shared/api/hook";
+import { RequestStatuses } from "../../shared/lib/network";
 
 export const ProjectListPage: React.FC = () => {
-    const [data, isLoading] = useUserProjects();
+    const resizerBackend = useResizerBackend();
 
-    if (isLoading) {
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+        dispatch(fetchProjectsList({resizerBackend}))
+    }, [dispatch, resizerBackend])
+    
+    const fetchStatus = useAppSelector(selectFetchProjectsListStatus);
+    const projectsLimit = useAppSelector(selectProjectsLimit);
+    const projects = useAppSelector(projectsSelectors.selectAll);
+
+    if (fetchStatus === RequestStatuses.IDLE || fetchStatus === RequestStatuses.PENDING) {
         return (
             <LoaderPage />
         )
     }
 
-    if (!data) {
+    if (fetchStatus === RequestStatuses.FAILED || typeof projectsLimit !== 'number') {
         return (
             <ErrorPage />
         )
@@ -27,12 +39,12 @@ export const ProjectListPage: React.FC = () => {
         <section>
             <div className={styles.topWrapper}>
                 <div className={styles.counter}>
-                    Количество проектов: {data.projects.length}/{data.projectsLimit}
+                    Количество проектов: {projects.length}/{projectsLimit}
                 </div>
-                <CreateProjectButton isDisabled={data.projects.length >= data.projectsLimit}/>
+                <CreateProjectButton isDisabled={projects.length >= projectsLimit}/>
             </div>
             <ul className={styles.projectList}>
-                {data.projects.map(project => (
+                {projects.map(project => (
                     <li key={project.alias}>
                         <Link className={styles.projectCard} to={`/projects/${project.alias}`}>
                             <div className={styles.projectCard__titleBlock}>

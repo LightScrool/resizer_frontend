@@ -11,5 +11,5 @@ export const useResizerBackend = () => {
         }
 
         return new ResizerBackendClient({ authToken: authData.token});
-    }, [authData])
+    }, [authData.isAuth, authData.token])
 }

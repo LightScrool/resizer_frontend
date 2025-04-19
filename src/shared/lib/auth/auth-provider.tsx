@@ -27,6 +27,11 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useUserData();
 
+    console.log({
+        token,
+        userData,
+    })
+
     useLayoutEffect(() => {
         if (!token) {
             return;
