@@ -27,7 +27,11 @@ function App() {
                 <Route path='/' element={<ProjectListPage />} />
                 <Route path='/projects' element={<ProjectListPage />} />
                 
-                <Route path='/projects/:projectAlias' element={<ProjectPage />} />
+                <Route path='/projects/:projectAlias' element={<ProjectPage />}>
+                  <Route index element={'Пресеты'}/>
+                  <Route path='presets' element={'Пресеты'}/>
+                  <Route path='images' element={'Изображения'}/>
+                </Route>
                 
                 <Route path='*' element={<NotFoundPage />} />
               </Routes>

@@ -1,41 +1,72 @@
-import React from "react"
+import React, { useEffect } from "react"
 import cn from "classnames"
-import { ProjectInfo as TProjectInfo } from "../../shared/api"
 import styles from './styles.module.scss';
 import Button from "../../shared/ui/Button/Button";
+import { useResizerBackend } from "../../shared/api/hook";
+import { useAppDispatch, useAppSelector } from "../../entities/redux/app-typing";
+import { fetchProjectInfo, selectFetchProjectInfoStatus, selectProjectInfo } from "../../entities/redux/project-info";
+import { RequestStatuses } from "../../shared/lib/network";
+import { LoaderPage } from "../../pages/loader-page";
+import { ErrorPage } from "../../pages/error-page";
 
-type Props = TProjectInfo;
+const PLACEHOLDERS_MAX_HEIGHT = 182;
 
-export const ProjectInfo: React.FC<Props> = ({alias, name, description}) => {
+type Props = {
+    projectAlias: string;
+};
+
+export const ProjectInfo: React.FC<Props> = ({ projectAlias }) => {
+    const resizerBackend = useResizerBackend();
+    
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+        dispatch(fetchProjectInfo({resizerBackend, projectAlias}))
+    }, [dispatch, resizerBackend, projectAlias])
+    
+    const fetchStatus = useAppSelector(selectFetchProjectInfoStatus);
+    const projectInfo = useAppSelector(selectProjectInfo);
+
+    if (fetchStatus === RequestStatuses.IDLE || fetchStatus === RequestStatuses.PENDING) {
+        return (
+            <LoaderPage maxHeight={PLACEHOLDERS_MAX_HEIGHT} />
+        )
+    }
+
+    if (fetchStatus === RequestStatuses.FAILED || !projectInfo) {
+        return (
+            <ErrorPage maxHeight={PLACEHOLDERS_MAX_HEIGHT} />
+        )
+    }
+
     return (
-        <>
-            <section className={styles.mainInfo}>
+        <section>
+            <div className={styles.mainInfo}>
                 <div>
-                    {name ? (
+                    {projectInfo.name ? (
                         <>
-                            <h1 className={styles.title}>{name}</h1>
-                            <h2 className={cn(styles.subtitle, styles.alias)}>{alias}</h2>
+                            <h1 className={styles.title}>{projectInfo.name}</h1>
+                            <h2 className={cn(styles.subtitle, styles.alias)}>{projectInfo.alias}</h2>
                         </>
                     ) : (
-                        <h1 className={cn(styles.title, styles.alias)}>{alias}</h1>
+                        <h1 className={cn(styles.title, styles.alias)}>{projectInfo.alias}</h1>
                     )}
 
-                    {description ? (
+                    {projectInfo.description ? (
                         <div className={styles.description}>
-                            {description}
+                            {projectInfo.description}
                         </div>
                     ): null}
                 </div>
                 <Button className={styles.button} danger>
                     Удалить проект
                 </Button>
-            </section>
-            <section className={styles.apiKeyBlock}>
-                <span>Ключ для доступа по API: {'*'.repeat(32)}</span>
+            </div>
+            <div className={styles.apiKeyBlock}>
+                <span className={styles.apiKey}>Ключ для доступа по API: {'*'.repeat(32)}</span>
                 <Button className={styles.button}>
                     Сбросить ключ
                 </Button>
-            </section>
-        </>
+            </div>
+        </section>
     )
 }

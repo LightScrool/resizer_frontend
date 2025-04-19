@@ -2,9 +2,13 @@ import React from "react"
 
 import CenterPageText from "../../shared/ui/CenterPageText/CenterPageText"
 
-export const ErrorPage: React.FC = () => {
+type Props = {
+    maxHeight?: number;
+}
+
+export const ErrorPage: React.FC<Props> = ({maxHeight}) => {
     return (
-        <CenterPageText>
+        <CenterPageText maxHeight={maxHeight}>
             Что-то пошло не так...
         </CenterPageText>
     )

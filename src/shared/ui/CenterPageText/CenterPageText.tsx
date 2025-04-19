@@ -3,10 +3,16 @@ import styles from "./CenterPageText.module.scss";
 
 interface CenterPageTextProps {
   children: ReactNode;
+  maxHeight?: number;
 }
 
-const CenterPageText: FC<CenterPageTextProps> = ({ children }) => {
-  return <div className={styles.main}>{children}</div>;
+const CenterPageText: FC<CenterPageTextProps> = ({ children, maxHeight }) => {
+  return <div 
+      className={styles.main}
+      style={{maxHeight}}
+    >
+      {children}
+      </div>;
 };
 
 export default CenterPageText;

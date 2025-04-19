@@ -1,0 +1,22 @@
+@import '../../../../shared/styles/variables.scss';
+
+.tabs {
+    border-bottom: 2px solid $color-gray-3;
+}
+
+.tab {
+    display: inline-block;
+    padding-bottom: 0.5em;
+
+    font-size: 1.2em;
+    color: $color-black;
+    text-decoration: none;
+
+    & + & {
+        margin-left: 1.5em;
+    }
+
+    &_active {
+        border-bottom: 3px solid $color-gray-3;
+    }
+}

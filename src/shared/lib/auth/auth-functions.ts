@@ -12,7 +12,7 @@ export const login = () => {
     const searchParams = new URLSearchParams({
         response_type: 'token',
         client_id: YP_API_CLIENT_ID,
-        redirect_uri: window.location.href
+        redirect_uri: `${window.location.protocol}//${window.location.host}`
     })
 
     const authUrl = `${YP_API_PATH}?${searchParams}`;
