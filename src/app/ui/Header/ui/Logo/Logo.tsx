@@ -1,7 +1,8 @@
 import React, { FC } from "react";
-import styles from "./Logo.module.scss";
+import { Link } from "react-router-dom";
 import classnames from "classnames";
-// import {Link} from "react-router-dom";
+
+import styles from "./Logo.module.scss";
 
 interface LogoProps {
   className?: string;
@@ -9,9 +10,9 @@ interface LogoProps {
 
 const Logo: FC<LogoProps> = ({ className }) => {
   return (
-    <a className={classnames(className, styles.Logo)} href='/'>
+    <Link to='/' className={classnames(className, styles.Logo)}>
       Resizer
-    </a>
+    </Link>
   );
 };
 
