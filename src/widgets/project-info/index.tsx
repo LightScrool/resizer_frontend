@@ -1,7 +1,6 @@
 import React, { useEffect } from "react"
 import cn from "classnames"
 import styles from './styles.module.scss';
-import Button from "../../shared/ui/Button/Button";
 import { useResizerBackend } from "../../shared/api/hook";
 import { useAppDispatch, useAppSelector } from "../../entities/redux/app-typing";
 import { fetchProjectInfo, selectFetchProjectInfoStatus, selectProjectInfo } from "../../entities/redux/project-info";
@@ -10,6 +9,7 @@ import { LoaderPage } from "../../pages/loader-page";
 import { ErrorPage } from "../../pages/error-page";
 import { ApiKey } from "./components/api-key";
 import { RefreshApiKeyButton } from "./components/refresh-api-key-button";
+import { DeleteProjectButton } from "./components/delete-project-button";
 
 const PLACEHOLDERS_MAX_HEIGHT = 182;
 
@@ -59,9 +59,7 @@ export const ProjectInfo: React.FC<Props> = ({ projectAlias }) => {
                         </div>
                     ): null}
                 </div>
-                <Button className={styles.button} preset="danger">
-                    Удалить проект
-                </Button>
+                <DeleteProjectButton className={styles.button} projectAlias={projectInfo.alias} />
             </div>
             <div className={styles.apiKeyBlock}>
                 <ApiKey projectAlias={projectInfo.alias} />

@@ -16,3 +16,14 @@ export const fetchProjectInfo = createAsyncThunk(
         }
     }
 );
+
+export const fetchRemoveProject = createAsyncThunk(
+    'projectInfo/fetchRemoveProject',
+    async ({ resizerBackend, projectAlias }: FetchProjectInfoParams, { rejectWithValue }) => {
+        try {
+            return await resizerBackend.removeProject(projectAlias);
+        } catch (e) {
+            return rejectWithValue(e);
+        }
+    }
+);
