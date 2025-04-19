@@ -7,14 +7,26 @@ type TBase = React.InputHTMLAttributes<HTMLTextAreaElement> &
 
 interface IInputProps extends TBase {
   rows?: number;
+  label?: string;
 }
 
-export const Input: FC<IInputProps> = (props) => {
+export const Input: FC<IInputProps> = ({label, ...props}) => {
   const rows = props?.rows || 1;
 
-  return rows === 1 ? (
+  const inputElement = rows === 1 ? (
     <input maxLength={255} {...props} className={cn(styles.input, props.className)}/>
   ) : (
     <textarea maxLength={255}  {...props} className={cn(styles.input, props.className)}/>
   );
+
+  if (!label) {
+    return inputElement;
+  }
+
+  return (
+    <div>
+      <div>{label}</div>
+      {inputElement}
+    </div>
+  )
 };

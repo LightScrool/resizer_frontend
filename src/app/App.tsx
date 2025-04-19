@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Layout from './ui/Layout/Layout'
 import { AuthGuard, AuthProvider } from '../shared/lib/auth'
@@ -7,6 +7,9 @@ import { AuthGuard, AuthProvider } from '../shared/lib/auth'
 import '../shared/styles/global.scss'
 import { NoAuthPage } from '../pages/no-auth-page';
 import { LoaderPage } from '../pages/loader-page';
+import { NotFoundPage } from '../pages/not-found-page';
+import { ProjectListPage } from '../pages/project-list-page';
+import { ProjectPage } from '../pages/project-page';
 
 function App() {
   return (
@@ -17,7 +20,14 @@ function App() {
             loader={<LoaderPage/>}
             noAuth={<NoAuthPage/>} 
           >
-            Body
+            <Routes>
+              <Route path='/' element={<ProjectListPage />} />
+              <Route path='/projects' element={<ProjectListPage />} />
+              
+              <Route path='/projects/:projectAlias' element={<ProjectPage />} />
+              
+              <Route path='*' element={<NotFoundPage />} />
+            </Routes>
           </AuthGuard>
           </Layout>
       </AuthProvider>

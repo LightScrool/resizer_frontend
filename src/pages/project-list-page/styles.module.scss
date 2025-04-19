@@ -1,0 +1,53 @@
+@import "../../shared/styles/variables.scss";
+
+.topWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.counter {
+    font-size: 1.6em;
+}
+
+.projectList {
+    margin-top: 2em;
+    list-style-type: none;
+
+    & > * {
+        margin-top: 1.5em;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+}
+
+.projectCard {
+    display: block;
+
+    border: 2px solid $color-gray-2;
+    padding: 1rem;
+
+    font-family: $font-main;
+    color: $color-black;
+
+    text-decoration: none;
+
+    &__titleBlock {
+        display: flex;
+
+        justify-content: space-between;
+
+        font-size: 1.4rem;
+    }
+
+    &__alias {
+        color: $color-main;
+    }
+
+    &__description {
+        margin-top: 1em;
+    }
+}

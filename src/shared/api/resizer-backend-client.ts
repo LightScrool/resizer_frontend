@@ -1,22 +1,34 @@
 
 import axios, {AxiosInstance} from "axios";
 import {RESIZER_BACKEND_URL} from "../config";
-import { UserData } from "./types";
+import { CreateProject, ProjectListItem, UserData, UserProjects } from "./types";
 
 export class ResizerBackendClient {
   declare private api: AxiosInstance;
 
-  constructor({ authToken }: { authToken: string }) {
+  constructor({ authToken }: { authToken: string | null }) {
     this.api = axios.create({baseURL: RESIZER_BACKEND_URL });
     
-    this.api.interceptors.request.use((config) => {
-      config.headers.Authorization = `OAuth ${authToken}`;
-      return config;
-    });
+    if (authToken) {
+      this.api.interceptors.request.use((config) => {
+        config.headers.Authorization = `OAuth ${authToken}`;
+        return config;
+      });
+    }
   }
 
   getUserData = async (): Promise<UserData> => {
     const response = await this.api.get("/v1/user");
     return response.data;
   };
+
+  getUserProjects = async (): Promise<UserProjects> => {
+    const response = await this.api.get("/v1/user/projects");
+    return response.data;
+  }
+
+  createProject  = async (project: CreateProject): Promise<ProjectListItem> => {
+    const response = await this.api.post("/v1/projects", project);
+    return response.data;
+  }
 }

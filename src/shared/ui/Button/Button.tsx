@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import styles from "./Button.module.scss";
 import classnames from "classnames";
+import { Loader } from "../Loader/Loader";
 
 interface ButtonProps
   extends React.DetailedHTMLProps<
@@ -9,6 +10,7 @@ interface ButtonProps
   > {
   subtext?: string;
   danger?: boolean;
+  isLoading?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -18,6 +20,7 @@ const Button: FC<ButtonProps> = ({
   className,
   type,
   danger = false,
+  isLoading = false,
   ...props
 }) => {
   const combineClasses = classnames(styles.Button, className, {
@@ -26,6 +29,29 @@ const Button: FC<ButtonProps> = ({
     [styles.danger]: danger,
   });
 
+  const content = subtext ? (
+      <div className={styles.textWrapper}>
+        <div>{children}</div>
+        <div className={styles.subtext}>{subtext}</div>
+      </div>
+  ) : (
+    children
+  )
+
+  let childElement;
+  if (isLoading) {
+    childElement = (
+      <div className={styles.loaderWrapper}>
+        <Loader className={styles.loader} size="s" />
+        <div className={styles.invisible}>
+          {content}
+        </div>
+      </div>
+    )
+  } else {
+    childElement = content
+  }
+
   return (
     <button
       disabled={!!disabled}
@@ -33,14 +59,7 @@ const Button: FC<ButtonProps> = ({
       className={combineClasses}
       {...props}
     >
-      {subtext ? (
-        <div className={styles.textWrapper}>
-          <div>{children}</div>
-          <div className={styles.subtext}>{subtext}</div>
-        </div>
-      ) : (
-        children
-      )}
+      {childElement}
     </button>
   );
 };

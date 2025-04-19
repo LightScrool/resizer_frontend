@@ -54,3 +54,18 @@
   line-height: 1rem;
   letter-spacing: 0;
 }
+
+.loaderWrapper {
+  position: relative;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.invisible {
+  opacity: 0;
+}
