@@ -1,0 +1,14 @@
+.fieldsWrapper {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 2em;
+
+    & > * {
+        margin-top: 1.5em;
+    }
+
+    & > *:first-child {
+        margin-top: 0;
+    }
+}

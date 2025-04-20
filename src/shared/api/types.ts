@@ -28,7 +28,7 @@ export type ProjectInfo = {
     description: string | null;
 };
 
-export type PresetResp = {
+export type Preset = {
     alias: string;
     size: number;
     isHorizontal: boolean;

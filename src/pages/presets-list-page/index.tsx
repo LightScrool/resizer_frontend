@@ -8,8 +8,8 @@ import { LoaderPage } from "../loader-page";
 import { ErrorPage } from "../error-page";
 import { selectFetchProjectInfoStatus, selectProjectInfo } from "../../entities/redux/project-info";
 import { PresetsList } from "../../widgets/presets-list";
+import { AddPresetButton } from "./components/add-preset-button";
 import styles from './styles.module.scss';
-import { CreateProjectButton } from "../../widgets/create-project-button";
 
 const PLACEHOLDERS_MAX_HEIGHT = 250;
 
@@ -48,7 +48,7 @@ export const PresetsListPage: React.FC = () => {
                 <div className={styles.counter}>
                     Количество пресетов: {presets.length}/{projectInfo.presetsLimit}
                 </div>
-                <CreateProjectButton isDisabled={presets.length >= projectInfo.presetsLimit}/>
+                <AddPresetButton projectAlias={projectAlias} isDisabled={presets.length >= projectInfo.presetsLimit}/>
             </div>
             <PresetsList />
         </>

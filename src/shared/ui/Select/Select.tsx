@@ -3,15 +3,17 @@ import styles from "./Select.module.scss";
 import cn from "classnames";
 
 interface ISelectProps extends React.InputHTMLAttributes<HTMLSelectElement> {
-  options: { [key: string]: string };
+  options: Record<string, string>;
+  label?: string;
 }
 
 export const Select: FC<ISelectProps> = ({
   placeholder,
   options,
+  label,
   ...props
 }) => {
-  return (
+  const selectElement = (
     <select {...props} className={cn(styles.select, props.className)}>
       {placeholder && (
         <option className={styles.option} disabled={true} value="">
@@ -25,5 +27,16 @@ export const Select: FC<ISelectProps> = ({
           </option>
         ))}
     </select>
-  );
+  )
+
+  if (!label) {
+    return selectElement;
+  }
+
+  return (
+    <div>
+      <div>{label}</div>
+      {selectElement}
+    </div>
+  )
 };
