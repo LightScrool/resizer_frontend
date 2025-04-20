@@ -4,21 +4,27 @@ import cn from 'classnames';
 
 import styles from './styles.module.scss';
 
+type TabName = 'presets' | 'images';
+
 type Tab = {
-    pathEnd: string;
+    tabName: TabName;
     label: string;
 }
 
+const DEFAULT_TAB = 'presets' satisfies TabName;
+
 const TABS: Tab[] = [
     {
-        pathEnd: 'presets',
+        tabName: 'presets',
         label: 'Пресеты'
     },
     {
-        pathEnd: 'images',
+        tabName: 'images',
         label: 'Изображения'
     },
 ]
+
+const REG_EXP = /\/projects\/[^/]+\/([^/]*)?$/
 
 type Props = {
     className?: string;
@@ -28,15 +34,15 @@ type Props = {
 export const Tabs: React.FC<Props> = ({className, projectAlias}) => {
     const { pathname } = useLocation();
     
-    const pathEnd = pathname.split('/').pop();
+    const currentTab = REG_EXP.exec(pathname)?.[1] || DEFAULT_TAB;
 
     return (
         <div className={cn(className, styles.tabs)}>
             {TABS.map((tab) => (
                 <Link 
-                    key={tab.pathEnd}
-                    className={cn(styles.tab, tab.pathEnd === pathEnd && styles.tab_active)}
-                    to={`/projects/${projectAlias}/${tab.pathEnd}`}
+                    key={tab.tabName}
+                    className={cn(styles.tab, tab.tabName === currentTab && styles.tab_active)}
+                    to={`/projects/${projectAlias}/${tab.tabName}`}
                 >
                     {tab.label}
                 </Link>
