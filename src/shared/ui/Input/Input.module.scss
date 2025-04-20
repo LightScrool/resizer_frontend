@@ -25,4 +25,8 @@
   &[type=number] {
     -moz-appearance: textfield;
   }
+
+  &_disabled {
+    color: $color-gray-3;
+  }
 }

@@ -4,12 +4,14 @@ import { RequestStatuses } from "../../../shared/lib/network";
 export type PresetEntity = Preset & {
     fetchEditStatus: RequestStatuses;
     fetchRemoveStatus: RequestStatuses;
+    isEditPopupOpened: boolean;
 }
 
 export const createPresetEntity = (preset: Preset): PresetEntity => ({
     ...preset,
     fetchEditStatus: RequestStatuses.IDLE,
     fetchRemoveStatus: RequestStatuses.IDLE,
+    isEditPopupOpened: false,
 });
 
 export const getPresetFromEntity = (presetEntity: PresetEntity): Preset => ({

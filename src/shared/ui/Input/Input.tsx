@@ -14,9 +14,25 @@ export const Input: FC<IInputProps> = ({label, ...props}) => {
   const rows = props?.rows || 1;
 
   const inputElement = rows === 1 ? (
-    <input maxLength={255} {...props} className={cn(styles.input, props.className)}/>
+    <input
+      maxLength={255}
+      {...props}
+      className={cn(
+        props.className,
+        styles.input,
+        props.disabled && styles.input_disabled
+      )}
+    />
   ) : (
-    <textarea maxLength={255}  {...props} className={cn(styles.input, props.className)}/>
+    <textarea
+      maxLength={255}
+      {...props}
+      className={cn(
+        props.className,
+        styles.input,
+        props.disabled && styles.input_disabled
+      )}
+    />
   );
 
   if (!label) {

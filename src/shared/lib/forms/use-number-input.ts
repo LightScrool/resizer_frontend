@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 
-export const useNumberInput = () => {
-    const [value, setValue] = useState<number>();
+export const useNumberInput = (defaultValue: number | undefined) => {
+    const [value, setValue] = useState<number | undefined>(defaultValue);
 
     const handleSetValue = useCallback((value: string | undefined) => {
         if (!value) {

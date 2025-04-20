@@ -5,7 +5,7 @@ import CenterPageText from "../../shared/ui/CenterPageText/CenterPageText";
 import { Loader } from "../../shared/ui/Loader/Loader";
 import { RequestStatuses, uniteRequestStatuses } from "../../shared/lib/network";
 import { RemovePresetButton } from "./components/remove-preset-button";
-import { EditPresetButton } from "./components/edit-preset-button";
+import { EditPresetButton, EditPresetPopupSlot } from "./components/edit-preset";
 
 import styles from './styles.module.scss';
 
@@ -46,13 +46,16 @@ export const PresetsList: React.FC<Props> = ({projectAlias}) => {
                         </div>
                     </div>
                     <div className={styles.actions}>
+                        <EditPresetPopupSlot
+                            projectAlias={projectAlias}
+                            presetAlias={preset.alias}
+                        />
                         {uniteRequestStatuses(preset.fetchEditStatus, preset.fetchRemoveStatus) === RequestStatuses.PENDING ? (
                             <Loader size="s"/>
                         ): (
                             <>
                                 <EditPresetButton
                                     className={styles.actions__item}
-                                    projectAlias={projectAlias}
                                     presetAlias={preset.alias}
                                 />
                                 <RemovePresetButton

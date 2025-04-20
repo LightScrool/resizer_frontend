@@ -62,3 +62,29 @@ export const fetchRemovePreset = createAppAsyncThunk(
         }
     }
 );
+
+type FetchEditPresetParams = {
+    resizerBackend: ResizerBackendClient;
+    projectAlias: string;
+    preset: Preset;
+}
+
+export const fetchEditPreset = createAppAsyncThunk(
+    'presetsList/fetchEditPreset',
+    async ({ resizerBackend, projectAlias, preset }: FetchEditPresetParams, { getState, rejectWithValue }) => {
+        try {
+            const presets = presetsSelectors
+                .selectAll((getState()))
+                .map(getPresetFromEntity)
+                .map((currentPreset) => {
+                    return currentPreset.alias === preset.alias ? preset : currentPreset;
+                })
+
+            await resizerBackend.setPresets(projectAlias, presets);
+
+            return preset;
+        } catch (e) {
+            return rejectWithValue(e);
+        }
+    }
+);
