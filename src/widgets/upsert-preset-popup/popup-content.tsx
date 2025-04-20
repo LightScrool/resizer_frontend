@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 
+import { useAliasInput, useNumberInput } from "../../shared/lib/forms";
+import { Input } from "../../shared/ui/Input/Input";
+import { Select } from "../../shared/ui/Select/Select";
+import Button from "../../shared/ui/Button/Button";
+
 import styles from './popup-content.module.scss';
-import { useAliasInput, useNumberInput } from "../../../../shared/lib/forms";
-import { useAppDispatch, useAppSelector } from "../../../../entities/redux/app-typing";
-import { useResizerBackend } from "../../../../shared/api/hook";
-import { Input } from "../../../../shared/ui/Input/Input";
-import Button from "../../../../shared/ui/Button/Button";
-import { fetchAddPreset, selectIsAddPresetLoading } from "../../../../entities/redux/presets-list";
-import { Select } from "../../../../shared/ui/Select/Select";
+import { Preset } from "../../shared/api";
 
 const SELECT_ORIENTATION_OPTIONS = {
     horizontal: 'Горизонтальная',
@@ -17,11 +16,13 @@ const SELECT_ORIENTATION_OPTIONS = {
 type Orientation = keyof typeof SELECT_ORIENTATION_OPTIONS;
 
 type Props = {
-    projectAlias: string;
+    submitText: string;
+    isLoading: boolean;
     onClose: VoidFunction;
+    onSubmit: (preset: Preset) => Promise<void>
 }
 
-export const PopupContent: React.FC<Props> = ({ projectAlias, onClose }) => {
+export const PopupContent: React.FC<Props> = ({ submitText, isLoading, onClose, onSubmit }) => {
     const [alias, setAlias] = useAliasInput();
     const [name, setName] = useState<string>();
     const [description, setDescription] = useState<string>();
@@ -30,27 +31,18 @@ export const PopupContent: React.FC<Props> = ({ projectAlias, onClose }) => {
 
     const isDisabled = !alias || !size || !orientation;
 
-    const isLoading = useAppSelector(selectIsAddPresetLoading);
-    const resizerBackend = useResizerBackend();
-    const dispatch = useAppDispatch();
-
     const handleClick = () => {
         if (isDisabled) {
             return;
         }
-
-        dispatch(fetchAddPreset({
-            resizerBackend,
-            projectAlias,
-            preset: {
-                alias,
-                name,
-                description,
-                size,
-                isHorizontal: orientation === 'horizontal',
-            }
-        }))
-            .unwrap()
+        
+        onSubmit({
+            alias,
+            name,
+            description,
+            size,
+            isHorizontal: orientation === 'horizontal',
+        })
             .then(onClose)
     }
     
@@ -68,7 +60,13 @@ export const PopupContent: React.FC<Props> = ({ projectAlias, onClose }) => {
                     onChange={(e) => setOrientation(e.target.value as Orientation)}
                 />
             </div>
-            <Button isLoading={isLoading} disabled={isDisabled} onClick={handleClick}>Добавить</Button>
+            <Button
+                isLoading={isLoading}
+                disabled={isDisabled}
+                onClick={handleClick}
+            >
+                {submitText}
+            </Button>
         </>
     );
 }
