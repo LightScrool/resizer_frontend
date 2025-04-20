@@ -1,13 +1,11 @@
 import React from "react"
-import cn from "classnames"
 
 import { useActWithConfirmation } from "../../../../shared/lib/act-with-confirmation";
 import { useAppDispatch } from "../../../../entities/redux/app-typing";
 import { useResizerBackend } from "../../../../shared/api/hook";
 import { fetchRemovePreset } from "../../../../entities/redux/presets-list";
 
-import icon from './assets/trash-can-regular.svg';
-import styles from './styles.module.scss';
+import { RemoveButton } from "../../../../shared/ui/remove-button";
 
 type Props = {
     className?: string;
@@ -15,7 +13,7 @@ type Props = {
     presetAlias: string;
 }
 
-export const RemoveButton: React.FC<Props> = ({ 
+export const RemovePresetButton: React.FC<Props> = ({ 
     className,
     projectAlias,
     presetAlias,
@@ -39,8 +37,6 @@ export const RemoveButton: React.FC<Props> = ({
     }
     
     return (
-        <button className={cn(className, styles.button)} onClick={handleClick}>
-            <img className={styles.icon} src={icon} />
-        </button>
+        <RemoveButton className={className} onClick={handleClick} />
     )
 }

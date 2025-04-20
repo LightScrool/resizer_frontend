@@ -2,12 +2,12 @@ import React from "react";
 import { useAppSelector } from "../../entities/redux/app-typing";
 import { presetsSelectors } from "../../entities/redux/presets-list";
 import CenterPageText from "../../shared/ui/CenterPageText/CenterPageText";
-import { EditButton } from "./components/edit-button";
-import { RemoveButton } from "./components/remove-button";
-
-import styles from './styles.module.scss';
 import { Loader } from "../../shared/ui/Loader/Loader";
 import { RequestStatuses, uniteRequestStatuses } from "../../shared/lib/network";
+import { RemovePresetButton } from "./components/remove-preset-button";
+import { EditPresetButton } from "./components/edit-preset-button";
+
+import styles from './styles.module.scss';
 
 const PLACEHOLDERS_MAX_HEIGHT = 250;
 
@@ -50,8 +50,12 @@ export const PresetsList: React.FC<Props> = ({projectAlias}) => {
                             <Loader size="s"/>
                         ): (
                             <>
-                                <EditButton className={styles.actions__item} />
-                                <RemoveButton
+                                <EditPresetButton
+                                    className={styles.actions__item}
+                                    projectAlias={projectAlias}
+                                    presetAlias={preset.alias}
+                                />
+                                <RemovePresetButton
                                     className={styles.actions__item}
                                     projectAlias={projectAlias}
                                     presetAlias={preset.alias}
