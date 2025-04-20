@@ -5,6 +5,7 @@ import { Loader } from "../../../../shared/ui/Loader/Loader";
 import { useAppDispatch, useAppSelector } from "../../../../entities/redux/app-typing";
 import { clearApiKey, fetchApiKey, selectApiKey, selectIsApiKeyLoading } from "../../../../entities/redux/project-api-key";
 import { useResizerBackend } from "../../../../shared/api/hook";
+import { CopyText } from "../../../../shared/ui/copy-text";
 
 const PLACEHOLDER = '*'.repeat(32);
 
@@ -23,13 +24,6 @@ export const ApiKey: React.FC<Props> = ({ projectAlias }) => {
         dispatch(fetchApiKey({ resizerBackend, projectAlias }))
     }
 
-    const handleCopyValue = () => {
-        if (!apiKey) {
-            return;
-        }
-        navigator.clipboard.writeText(apiKey);
-    }
-
     useEffect(() => {
         return () => {
             dispatch(clearApiKey());
@@ -46,12 +40,7 @@ export const ApiKey: React.FC<Props> = ({ projectAlias }) => {
                     </div>
                 ) : (
                     apiKey ? (
-                        <button 
-                            className={styles.textButton}
-                            onClick={handleCopyValue}
-                        >
-                            {apiKey}
-                        </button>
+                        <CopyText text={apiKey} />
                     ) : (
                         <button 
                             className={styles.textButton}

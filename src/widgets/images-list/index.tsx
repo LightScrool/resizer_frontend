@@ -7,6 +7,7 @@ import { RemoveImageButton } from "./components/remove-image-button";
 
 import styles from './styles.module.scss';
 import { imagesSelectors } from "../../entities/redux/images-list";
+import { CopyText } from "../../shared/ui/copy-text";
 
 const PLACEHOLDERS_MAX_HEIGHT = 250;
 
@@ -30,9 +31,13 @@ export const ImagesList: React.FC<Props> = ({projectAlias}) => {
             {images.map(image => (
                 <li key={image.id} className={styles.imageCard}>
                     <div>
-                        <div className={styles.imageCard__titleBlock}>
-                            <span className={styles.imageCard__alias}>{image.id}</span>
-                            {image.name && (<span className={styles.imageCard__name}>{image.name}</span>)}
+                        {image.name && (
+                            <div className={styles.imageCard__name}>
+                                {image.name}
+                            </div>
+                        )}
+                        <div className={styles.imageCard__link}>
+                            <CopyText text={image.link}/>
                         </div>
                         {image.description && (
                             <div className={styles.imageCard__description}>
