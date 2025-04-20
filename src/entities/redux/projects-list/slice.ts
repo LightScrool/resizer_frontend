@@ -47,7 +47,8 @@ export const projectsListSlice = createSlice({
             .addCase(fetchCreateProject.fulfilled, (state, action) => {
                 state.fetchCreateProjectStatus = RequestStatuses.SUCCESS;
 
-                projectsAdapter.setOne(state.projectsAdapter, action.payload);
+                projectsAdapter.addOne(state.projectsAdapter, action.payload);
+                state.projectsAdapter.ids.unshift(state.projectsAdapter.ids.pop()!);
             })
             .addCase(fetchCreateProject.rejected, (state) => {
                 state.fetchCreateProjectStatus = RequestStatuses.FAILED;
