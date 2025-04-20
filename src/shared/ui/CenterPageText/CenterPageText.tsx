@@ -1,18 +1,22 @@
 import React, { FC, ReactNode } from "react";
+import cn from 'classnames';
 import styles from "./CenterPageText.module.scss";
 
 interface CenterPageTextProps {
   children: ReactNode;
   maxHeight?: number;
+  size?: 'm' | 'l';
 }
 
-const CenterPageText: FC<CenterPageTextProps> = ({ children, maxHeight }) => {
-  return <div 
-      className={styles.main}
+const CenterPageText: FC<CenterPageTextProps> = ({ children, maxHeight, size='l' }) => {
+  return (
+    <div 
+      className={cn(styles.main, styles[`main_${size}`])}
       style={{maxHeight}}
     >
       {children}
-      </div>;
+    </div>
+  )
 };
 
 export default CenterPageText;

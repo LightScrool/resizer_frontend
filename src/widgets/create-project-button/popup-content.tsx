@@ -6,13 +6,14 @@ import { useResizerBackend } from "../../shared/api/hook";
 import styles from './popup-content.module.scss';
 import { useAppDispatch, useAppSelector } from "../../entities/redux/app-typing";
 import { fetchCreateProject, selectIsCreateProjectLoading } from "../../entities/redux/projects-list";
+import { useAliasInput } from "../../shared/lib/alias/use-alias-input";
 
 type Props = {
     onClose: VoidFunction;
 }
 
 export const PopupContent: React.FC<Props> = ({ onClose }) => {
-    const [alias, setAlias] = useState<string>();
+    const [alias, setAlias] = useAliasInput();
     const [name, setName] = useState<string>();
     const [description, setDescription] = useState<string>();
 

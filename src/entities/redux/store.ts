@@ -3,11 +3,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { projectsListSlice } from './projects-list';
 import { projectInfoSlice } from './project-info';
 import { projectApiKeySlice } from './project-api-key';
+import { presetsListSlice } from './presets-list';
 
 export const rootReducer = combineReducers({
     [projectsListSlice.name]: projectsListSlice.reducer,
     [projectInfoSlice.name]: projectInfoSlice.reducer,
     [projectApiKeySlice.name]: projectApiKeySlice.reducer,
+    [presetsListSlice.name]: presetsListSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

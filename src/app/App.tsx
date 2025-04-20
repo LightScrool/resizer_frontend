@@ -13,6 +13,7 @@ import { ProjectPage } from '../pages/project-page';
 import { Provider } from 'react-redux';
 import { store } from '../entities/redux/store';
 import { ActWithConfirmationProvider } from '../shared/lib/act-with-confirmation';
+import { PresetsListPage } from '../pages/presets-list-page';
 
 function App() {
   return (
@@ -30,8 +31,8 @@ function App() {
                   <Route path='/projects' element={<ProjectListPage />} />
                   
                   <Route path='/projects/:projectAlias' element={<ProjectPage />}>
-                    <Route index element={'Пресеты'}/>
-                    <Route path='presets' element={'Пресеты'}/>
+                    <Route index element={<PresetsListPage />}/>
+                    <Route path='presets' element={<PresetsListPage />}/>
                     <Route path='images' element={'Изображения'}/>
                   </Route>
                   

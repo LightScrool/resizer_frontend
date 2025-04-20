@@ -27,3 +27,11 @@ export type ProjectInfo = {
     name: string | null;
     description: string | null;
 };
+
+export type PresetResp = {
+    alias: string;
+    size: number;
+    isHorizontal: boolean;
+    name?: string | null;
+    description?: string | null;
+};
