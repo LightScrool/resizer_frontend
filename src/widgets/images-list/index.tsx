@@ -53,7 +53,7 @@ export const ImagesList: React.FC<Props> = ({projectAlias}) => {
                             <RemoveImageButton
                                 className={styles.actions__item}
                                 projectAlias={projectAlias}
-                                presetAlias={image.id}
+                                imageId={image.id}
                             />
                         )}
                     </div>

@@ -16,3 +16,20 @@ export const fetchImagesList = createAsyncThunk(
         }
     }
 );
+
+type FetchRemoveImageParams = {
+    resizerBackend: ResizerBackendClient;
+    projectAlias: string;
+    imageId: string;
+}
+
+export const fetchRemoveImage = createAsyncThunk(
+    'imagesList/fetchRemoveImage',
+    async ({ resizerBackend, projectAlias, imageId }: FetchRemoveImageParams, { rejectWithValue }) => {
+        try {
+            return await resizerBackend.removeImage(projectAlias, imageId);
+        } catch (e) {
+            return rejectWithValue(e);
+        }
+    }
+);

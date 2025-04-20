@@ -2,7 +2,7 @@ import { createEntityAdapter, createSlice, EntityState } from '@reduxjs/toolkit'
 
 import { RequestStatuses } from '../../../shared/lib/network';
 import { RootState } from '../store';
-import { fetchImagesList } from './thunk';
+import { fetchImagesList, fetchRemoveImage } from './thunk';
 import { createImageEntity, ImageEntity } from './image-entity';
 
 const imagesAdapter = createEntityAdapter<ImageEntity, ImageEntity['id']>({selectId: (item) => item.id});
@@ -34,6 +34,30 @@ export const imagesListSlice = createSlice({
             .addCase(fetchImagesList.rejected, (state) => {
                 state.fetchImagesListStatus = RequestStatuses.FAILED;
             });
+
+            builder
+                .addCase(fetchRemoveImage.pending, (state, action) => {
+                    const imageId = action.meta.arg.imageId;
+                    imagesAdapter.updateOne(state.imagesAdapter, {
+                        id: imageId,
+                        changes: {
+                            fetchRemoveStatus: RequestStatuses.PENDING
+                        }
+                    })
+                })
+                .addCase(fetchRemoveImage.fulfilled, (state, action) => {
+                    const imageId = action.meta.arg.imageId;
+                    imagesAdapter.removeOne(state.imagesAdapter, imageId);
+                })
+                .addCase(fetchRemoveImage.rejected, (state, action) => {
+                    const imageId = action.meta.arg.imageId;
+                    imagesAdapter.updateOne(state.imagesAdapter, {
+                        id: imageId,
+                        changes: {
+                            fetchRemoveStatus: RequestStatuses.FAILED
+                        }
+                    })
+                })
     },
     selectors: {
         selectFetchImagesListStatus: (state) => state.fetchImagesListStatus,

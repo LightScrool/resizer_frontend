@@ -64,4 +64,8 @@ export class ResizerBackendClient {
     const response = await this.api.get(`/v1/projects/${projectAlias}/images`);
     return response.data;
   }
+
+  removeImage = async (projectAlias: string, imageId: string): Promise<void> => {
+    await this.api.delete(`/v1/projects/${projectAlias}/images/${imageId}`);
+  }
 }
