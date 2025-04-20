@@ -1,0 +1,63 @@
+@import '../../shared/styles/variables.scss';
+
+.imagesList {
+    margin-top: 2em;
+    list-style-type: none;
+
+    & > * {
+        margin-top: 1.5em;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+}
+
+.imageCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    border: 2px solid $color-gray-2;
+    padding: 1rem;
+
+    font-family: $font-main;
+    color: $color-black;
+
+    text-decoration: none;
+
+    &__titleBlock {
+        font-size: 1.4rem;
+    }
+
+    &__alias {
+        color: $color-main;
+    }
+
+    &__name {
+        margin-left: 1.5em;
+    }
+
+    &__description {
+        margin-top: 1em;
+    }
+
+    &__image {
+        margin-top: 1.5em;
+        height: 300px;
+        min-height: 300px;
+        max-height: 300px;
+        border: 1px solid $color-gray-2;
+    }
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+
+    &__item {
+        & + & {
+            margin-top: 1em;
+        }
+    }
+}

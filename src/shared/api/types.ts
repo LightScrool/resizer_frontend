@@ -35,3 +35,10 @@ export type Preset = {
     name?: string | null;
     description?: string | null;
 };
+
+export type Image = {
+    id: string;
+    link: string;
+    name?: string | null;
+    description?: string | null;
+};

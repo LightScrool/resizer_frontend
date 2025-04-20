@@ -1,7 +1,7 @@
 
 import axios, {AxiosInstance} from "axios";
 import {RESIZER_BACKEND_URL} from "../config";
-import { CreateProject, Preset, ProjectInfo, ProjectListItem, UserData, UserProjects } from "./types";
+import { CreateProject, Image, Preset, ProjectInfo, ProjectListItem, UserData, UserProjects } from "./types";
 
 export class ResizerBackendClient {
   declare private api: AxiosInstance;
@@ -57,6 +57,11 @@ export class ResizerBackendClient {
 
   setPresets = async (projectAlias: string, presets: Preset[]): Promise<void> => {
     const response = await this.api.post(`/v1/projects/${projectAlias}/presets`, presets);
+    return response.data;
+  }
+
+  getImagesList = async (projectAlias: string): Promise<Image[]> => {
+    const response = await this.api.get(`/v1/projects/${projectAlias}/images`);
     return response.data;
   }
 }
