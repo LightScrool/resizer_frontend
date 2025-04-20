@@ -70,7 +70,7 @@ export const PopupContent: React.FC<Props> = ({
     return (
         <>
             <div className={styles.fieldsWrapper}>
-                <Input label="Алиас*" disabled={!isAbleToEditAlias} value={alias} onChange={(e) => setAlias(e.target.value)}/>
+                <Input label="Алиас*" disabled={!isAbleToEditAlias} value={alias || ''} onChange={(e) => setAlias(e.target.value)}/>
                 <Input label="Название" value={name} onChange={(e) => setName(e.target.value)}/>
                 <Input label="Описание" rows={3} value={description} onChange={(e) => setDescription(e.target.value)}/>
                 <Input label="Размер*" value={String(size || '')} onChange={(e) => setSize(e.target.value)}/>
