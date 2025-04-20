@@ -1,6 +1,7 @@
 import React from "react"
 import cn from "classnames"
 
+import copyIconSrc from './assets/copy-regular.svg';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -19,6 +20,7 @@ export const CopyText: React.FC<Props> = ({ className, text }) => {
             onClick={handleCopyValue}
         >
             {text}
+            <img className={styles.copyIcon} src={copyIconSrc} />
         </button>
     )
 }

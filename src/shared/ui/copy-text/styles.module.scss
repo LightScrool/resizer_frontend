@@ -1,8 +1,31 @@
 .root {
     display: inline;
+
+    position: relative;
+
     background: none;
     border: none;
     font: inherit;
 
+    color: inherit;
+
     text-decoration: underline;
+}
+
+.copyIcon {
+    position: absolute;
+
+    width: 0.8em;
+    min-width: 0.8em;
+
+    top: 50%;
+    right: -3px;
+
+    transform: translate(100%, -50%);
+
+    opacity: 0;
+}
+
+.root:hover > .copyIcon {
+    opacity: 1;
 }

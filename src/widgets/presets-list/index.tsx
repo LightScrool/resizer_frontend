@@ -8,6 +8,7 @@ import { RemovePresetButton } from "./components/remove-preset-button";
 import { EditPresetButton, EditPresetPopupSlot } from "./components/edit-preset";
 
 import styles from './styles.module.scss';
+import { CopyText } from "../../shared/ui/copy-text";
 
 const PLACEHOLDERS_MAX_HEIGHT = 250;
 
@@ -32,7 +33,9 @@ export const PresetsList: React.FC<Props> = ({projectAlias}) => {
                 <li key={preset.alias} className={styles.presetCard}>
                     <div>
                         <div className={styles.presetCard__titleBlock}>
-                            <span className={styles.presetCard__alias}>{preset.alias}</span>
+                            <span className={styles.presetCard__alias}>
+                                <CopyText text={preset.alias} />
+                            </span>
                             {preset.name && (<span className={styles.presetCard__name}>{preset.name}</span>)}
                         </div>
                         {preset.description && (
