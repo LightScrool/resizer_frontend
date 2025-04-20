@@ -19,7 +19,7 @@ export const AddPresetButton: React.FC<Props> = ({ projectAlias, isDisabled }) =
                 <PopupContent projectAlias={projectAlias} onClose={handleClosePopup} />
             </Popup>
             <Button
-                subtext={isDisabled ? 'Превышено количество проектов' : undefined}
+                subtext={isDisabled ? 'Превышено количество пресетов' : undefined}
                 disabled={isDisabled}
                 onClick={handleOpenPopup}
             >

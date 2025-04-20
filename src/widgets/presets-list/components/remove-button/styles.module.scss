@@ -1,0 +1,17 @@
+.button {
+    $size: 1.6em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: $size;
+    height: $size;
+
+    background: none;
+}
+
+.icon {
+    height: 100%;
+    min-height: 100%;
+}
