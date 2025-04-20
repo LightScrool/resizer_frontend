@@ -23,7 +23,9 @@ export const projectInfoSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchProjectInfo.pending, (state) => {
-                state.fetchProjectInfoStatus = RequestStatuses.PENDING;
+                if (state.fetchProjectInfoStatus !== RequestStatuses.SUCCESS) {
+                    state.fetchProjectInfoStatus = RequestStatuses.PENDING;
+                }
             })
             .addCase(fetchProjectInfo.fulfilled, (state, action) => {
                 state.fetchProjectInfoStatus = RequestStatuses.SUCCESS;

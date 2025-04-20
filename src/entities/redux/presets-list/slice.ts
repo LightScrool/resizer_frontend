@@ -45,7 +45,9 @@ export const presetsListSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchPresetsList.pending, (state) => {
-                state.fetchPresetsListStatus = RequestStatuses.PENDING;
+                if (state.fetchPresetsListStatus !== RequestStatuses.SUCCESS) {
+                    state.fetchPresetsListStatus = RequestStatuses.PENDING;
+                }
             })
             .addCase(fetchPresetsList.fulfilled, (state, action) => {
                 state.fetchPresetsListStatus = RequestStatuses.SUCCESS;

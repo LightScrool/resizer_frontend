@@ -26,7 +26,9 @@ export const imagesListSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchImagesList.pending, (state) => {
-                state.fetchImagesListStatus = RequestStatuses.PENDING;
+                if (state.fetchImagesListStatus !== RequestStatuses.SUCCESS) {
+                    state.fetchImagesListStatus = RequestStatuses.PENDING;
+                }
             })
             .addCase(fetchImagesList.fulfilled, (state, action) => {
                 state.fetchImagesListStatus = RequestStatuses.SUCCESS;
