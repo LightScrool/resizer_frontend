@@ -42,3 +42,9 @@ export type Image = {
     name?: string | null;
     description?: string | null;
 };
+
+export type UploadImageBody = {
+    file: File;
+    name?: string | null;
+    description?: string | null;
+};

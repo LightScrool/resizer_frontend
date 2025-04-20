@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ResizerBackendClient } from '../../../shared/api';
+import { ResizerBackendClient, UploadImageBody } from '../../../shared/api';
 
 type FetchProjectsListParams = {
     resizerBackend: ResizerBackendClient;
@@ -28,6 +28,23 @@ export const fetchRemoveImage = createAsyncThunk(
     async ({ resizerBackend, projectAlias, imageId }: FetchRemoveImageParams, { rejectWithValue }) => {
         try {
             return await resizerBackend.removeImage(projectAlias, imageId);
+        } catch (e) {
+            return rejectWithValue(e);
+        }
+    }
+);
+
+type FetchUploadImageParams = {
+    resizerBackend: ResizerBackendClient;
+    projectAlias: string;
+    body: UploadImageBody;
+}
+
+export const fetchUploadImage = createAsyncThunk(
+    'imagesList/fetchUploadImage',
+    async ({ resizerBackend, projectAlias, body }: FetchUploadImageParams, { rejectWithValue }) => {
+        try {
+            return await resizerBackend.uploadImage(projectAlias, body);
         } catch (e) {
             return rejectWithValue(e);
         }

@@ -1,7 +1,7 @@
 
 import axios, {AxiosInstance} from "axios";
 import {RESIZER_BACKEND_URL} from "../config";
-import { CreateProject, Image, Preset, ProjectInfo, ProjectListItem, UserData, UserProjects } from "./types";
+import { CreateProject, Image, Preset, ProjectInfo, ProjectListItem, UploadImageBody, UserData, UserProjects } from "./types";
 
 export class ResizerBackendClient {
   declare private api: AxiosInstance;
@@ -67,5 +67,23 @@ export class ResizerBackendClient {
 
   removeImage = async (projectAlias: string, imageId: string): Promise<void> => {
     await this.api.delete(`/v1/projects/${projectAlias}/images/${imageId}`);
+  }
+
+  uploadImage = async (projectAlias: string, body: UploadImageBody): Promise<Image> => {
+    const formData = new FormData();
+
+    formData.append('file', body.file)
+    if (body.name) {
+      formData.append('name', body.name)
+    }
+    if (body.description) {
+      formData.append('description', body.description)
+    }
+
+    const response = await this.api.post(
+      `/v1/projects/${projectAlias}/images`,
+      formData
+    );
+    return response.data;
   }
 }
