@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Preset, ResizerBackendClient } from '../../../shared/api';
 import { presetsSelectors } from './slice';
 import { createAppAsyncThunk } from '../app-typing';
+import { getPresetFromEntity } from './preset-entity';
 
 type FetchProjectsListParams = {
     resizerBackend: ResizerBackendClient;
@@ -31,10 +32,31 @@ export const fetchAddPreset = createAppAsyncThunk(
         try {
             const presets = [
                 preset,
-                ...presetsSelectors.selectAll((getState())),
+                ...presetsSelectors.selectAll((getState())).map(getPresetFromEntity),
             ];
             await resizerBackend.setPresets(projectAlias, presets);
             return preset;
+        } catch (e) {
+            return rejectWithValue(e);
+        }
+    }
+);
+
+type FetchRemovePresetParams = {
+    resizerBackend: ResizerBackendClient;
+    projectAlias: string;
+    presetAlias: string;
+}
+
+export const fetchRemovePreset = createAppAsyncThunk(
+    'presetsList/fetchRemovePreset',
+    async ({ resizerBackend, projectAlias, presetAlias }: FetchRemovePresetParams, { getState, rejectWithValue }) => {
+        try {
+            const presets = presetsSelectors.selectAll((getState()))
+                .filter(preset => preset.alias !== presetAlias)
+                .map(getPresetFromEntity);
+
+            await resizerBackend.setPresets(projectAlias, presets);
         } catch (e) {
             return rejectWithValue(e);
         }

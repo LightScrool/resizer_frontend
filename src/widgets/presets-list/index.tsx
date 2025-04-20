@@ -1,3 +1,4 @@
+import React from "react";
 import { useAppSelector } from "../../entities/redux/app-typing";
 import { presetsSelectors } from "../../entities/redux/presets-list";
 import CenterPageText from "../../shared/ui/CenterPageText/CenterPageText";
@@ -5,10 +6,16 @@ import { EditButton } from "./components/edit-button";
 import { RemoveButton } from "./components/remove-button";
 
 import styles from './styles.module.scss';
+import { Loader } from "../../shared/ui/Loader/Loader";
+import { RequestStatuses, uniteRequestStatuses } from "../../shared/lib/network";
 
 const PLACEHOLDERS_MAX_HEIGHT = 250;
 
-export const PresetsList = () => {
+type Props = {
+    projectAlias: string;
+}
+
+export const PresetsList: React.FC<Props> = ({projectAlias}) => {
     const presets = useAppSelector(presetsSelectors.selectAll);
     
     if (!presets.length) {
@@ -39,8 +46,18 @@ export const PresetsList = () => {
                         </div>
                     </div>
                     <div className={styles.actions}>
-                        <EditButton className={styles.actions__item} />
-                        <RemoveButton className={styles.actions__item} />
+                        {uniteRequestStatuses(preset.fetchEditStatus, preset.fetchRemoveStatus) === RequestStatuses.PENDING ? (
+                            <Loader size="s"/>
+                        ): (
+                            <>
+                                <EditButton className={styles.actions__item} />
+                                <RemoveButton
+                                    className={styles.actions__item}
+                                    projectAlias={projectAlias}
+                                    presetAlias={preset.alias}
+                                />
+                            </>
+                        )}
                     </div>
                 </li>
             ))}

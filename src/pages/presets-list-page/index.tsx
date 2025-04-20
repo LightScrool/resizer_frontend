@@ -50,7 +50,7 @@ export const PresetsListPage: React.FC = () => {
                 </div>
                 <AddPresetButton projectAlias={projectAlias} isDisabled={presets.length >= projectInfo.presetsLimit}/>
             </div>
-            <PresetsList />
+            <PresetsList projectAlias={projectAlias} />
         </>
     )
 }

@@ -1,15 +1,15 @@
 import { createEntityAdapter, createSlice, EntityState } from '@reduxjs/toolkit';
 
 import { RequestStatuses } from '../../../shared/lib/network';
-import { Preset } from '../../../shared/api';
 import { RootState } from '../store';
-import { fetchPresetsList, fetchAddPreset } from './thunk';
+import { fetchPresetsList, fetchAddPreset, fetchRemovePreset } from './thunk';
+import { createPresetEntity, PresetEntity } from './preset-entity';
 
-const presetsAdapter = createEntityAdapter<Preset, Preset['alias']>({selectId: (item) => item.alias});
+const presetsAdapter = createEntityAdapter<PresetEntity, PresetEntity['alias']>({selectId: (item) => item.alias});
 
 type State = {
     fetchPresetsListStatus: RequestStatuses;
-    presetsAdapter: EntityState<Preset, Preset['alias']>;
+    presetsAdapter: EntityState<PresetEntity, PresetEntity['alias']>;
     fetchAddPresetStatus: RequestStatuses;
 };
 
@@ -31,7 +31,7 @@ export const presetsListSlice = createSlice({
             .addCase(fetchPresetsList.fulfilled, (state, action) => {
                 state.fetchPresetsListStatus = RequestStatuses.SUCCESS;
 
-                presetsAdapter.setAll(state.presetsAdapter, action.payload);
+                presetsAdapter.setAll(state.presetsAdapter, action.payload.map(createPresetEntity));
             })
             .addCase(fetchPresetsList.rejected, (state) => {
                 state.fetchPresetsListStatus = RequestStatuses.FAILED;
@@ -46,12 +46,36 @@ export const presetsListSlice = createSlice({
 
                 const newPreset = action.payload;
 
-                presetsAdapter.addOne(state.presetsAdapter, newPreset);
+                presetsAdapter.addOne(state.presetsAdapter, createPresetEntity(newPreset));
                 state.presetsAdapter.ids.unshift(state.presetsAdapter.ids.pop()!);
             })
             .addCase(fetchAddPreset.rejected, (state) => {
                 state.fetchAddPresetStatus = RequestStatuses.FAILED;
             });
+
+        builder
+            .addCase(fetchRemovePreset.pending, (state, action) => {
+                const presetAlias = action.meta.arg.presetAlias;
+                presetsAdapter.updateOne(state.presetsAdapter, {
+                    id: presetAlias,
+                    changes: {
+                        fetchRemoveStatus: RequestStatuses.PENDING
+                    }
+                })
+            })
+            .addCase(fetchRemovePreset.fulfilled, (state, action) => {
+                const presetAlias = action.meta.arg.presetAlias;
+                presetsAdapter.removeOne(state.presetsAdapter, presetAlias);
+            })
+            .addCase(fetchRemovePreset.rejected, (state, action) => {
+                const presetAlias = action.meta.arg.presetAlias;
+                presetsAdapter.updateOne(state.presetsAdapter, {
+                    id: presetAlias,
+                    changes: {
+                        fetchRemoveStatus: RequestStatuses.FAILED
+                    }
+                })
+            })
     },
     selectors: {
         selectFetchPresetsListStatus: (state) => state.fetchPresetsListStatus,
