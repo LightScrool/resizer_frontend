@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
 import AuthUserInfo from "./ui/AuthUserInfo/AuthUserInfo";
 import LoginButton from "./ui/LoginButton/LoginButton";

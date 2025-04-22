@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
 import Button from "../../../../../../../shared/ui/Button/Button";
 import { login } from "../../../../../../../shared/lib/auth";

@@ -1,5 +1,3 @@
-import React from "react";
-
 import styles from "./Header.module.scss";
 import Logo from "./ui/Logo/Logo";
 import UserInfo from "./ui/UserInfo/UserInfo";
