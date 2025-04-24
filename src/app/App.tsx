@@ -14,8 +14,11 @@ import { store } from '../entities/redux/store';
 import { ActWithConfirmationProvider } from '../shared/lib/act-with-confirmation';
 import { PresetsListPage } from '../pages/presets-list-page';
 import { ImagesListPage } from '../pages/images-list-page';
+import { usePingBackend } from '../shared/lib/network/use-ping-backend';
 
 function App() {
+  usePingBackend();
+
   return (
     <BrowserRouter>
       <AuthProvider>
