@@ -6,12 +6,15 @@ import { useAppDispatch, useAppSelector } from "../../../../entities/redux/app-t
 import { clearApiKey, fetchApiKey, selectApiKey, selectIsApiKeyLoading } from "../../../../entities/redux/project-api-key";
 import { useResizerBackend } from "../../../../shared/api/hook";
 import { CopyText } from "../../../../shared/ui/copy-text";
+import { RESIZER_BACKEND_URL } from "../../../../shared/config";
 
 const PLACEHOLDER = '*'.repeat(32);
 
 type Props = {
     projectAlias: string;
 }
+
+const SWAGGER_URL = [RESIZER_BACKEND_URL, 'swagger'].join('/');
 
 export const ApiKey: React.FC<Props> = ({ projectAlias }) => {
     const isLoading = useAppSelector(selectIsApiKeyLoading);
@@ -32,7 +35,18 @@ export const ApiKey: React.FC<Props> = ({ projectAlias }) => {
 
     return (
         <div className={styles.root}>
-            <span>Ключ для доступа по API: </span>
+            <div>
+                <span>Сервис поддерживает внешний API, подробнее в </span>
+                <a 
+                    href={SWAGGER_URL}
+                    target="_blank"
+                    rel="noopener noreferer"
+                >
+                    Swagger
+                </a>
+            </div>
+            <div>
+            <span>Ключ для доступа: </span>
             {
                 isLoading ? (
                     <div className={styles.loaderWrapper}>
@@ -51,6 +65,7 @@ export const ApiKey: React.FC<Props> = ({ projectAlias }) => {
                     )
                 )
             }
+            </div>
         </div>
     )
 }

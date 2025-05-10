@@ -1,5 +1,14 @@
 .root {
     font-size: 1.2em;
+    display: flex;
+    flex-direction: column;
+    & > * {
+        margin-top: .7em;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
 }
 
 .loaderWrapper {
